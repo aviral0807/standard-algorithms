@@ -7,11 +7,11 @@ const int kMod = 1e9 + 9;
 long long StringRollingHash(string &text) {
 
 	long long hash_value = 0;
-	long long p_pow_i = 1;
+	long long prime_pow_i = 1;
 
 	for(auto ch: text) {
-		hash_value = (hash_value + (ch - 'a' + 1) * p_pow_i) % kMod;
-		p_pow_i = (p_pow_i * kPrime) % kMod;
+		hash_value = (hash_value + (ch - 'a' + 1) * prime_pow_i) % kMod;
+		prime_pow_i = (prime_pow_i * kPrime) % kMod;
 	}
 
 	return hash_value;
