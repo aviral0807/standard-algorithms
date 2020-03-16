@@ -1,37 +1,37 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int p = 31;
-const int m = 1e9 + 9;
+const int kPrime = 31;
+const int kMod = 1e9 + 9;
 
-bool rabinCarp(string &text, string &pattern) {
-	int textLen = text.size();
-	int patternLen = pattern.size();
+bool RabinCarp(string &text, string &pattern) {
+	int text_len = text.size();
+	int pattern_len = pattern.size();
 
-	vector<long long> prefixHash(textLen+1, 0);
+	vector<long long> prefix_hash(text_len + 1, 0);
 	
-	long long pPowI = 1;
+	long long p_pow_i = 1;
 
-	for(int i = 0; i < textLen; i++) {
-		prefixHash[i+1] = (prefixHash[i] + (text[i] - 'a' + 1) * pPowI) % m;
-		pPowI = (pPowI * p) % m;
+	for(int i = 0; i < text_len; i++) {
+		prefix_hash[i+1] = (prefix_hash[i] + (text[i] - 'a' + 1) * p_pow_i) % kMod;
+		p_pow_i = (p_pow_i * kPrime) % kMod;
 	}
 
-	pPowI = 1;
-	long long patternHash = 0;
+	p_pow_i = 1;
+	long long pattern_hash = 0;
 
-	for(int i = 0; i < patternLen; i++) {
-		patternHash = (patternHash + (pattern[i] - 'a' + 1) * pPowI) % m;
-		pPowI = (pPowI * p) % m;
+	for(int i = 0; i < pattern_len; i++) {
+		pattern_hash = (pattern_hash + (pattern[i] - 'a' + 1) * p_pow_i) % kMod;
+		p_pow_i = (p_pow_i * kPrime) % kMod;
 	}
 
-	pPowI = 1;
-	for(int i = 0; i < textLen - patternLen+ 1; i++) {
-		long long curHash = (prefixHash[i + patternLen] - prefixHash[i] + m) % m;
-		if(curHash == (patternHash * pPowI) % m){
+	p_pow_i = 1;
+	for(int i = 0; i < text_len - pattern_len + 1; i++) {
+		long long cur_hash = (prefix_hash[i + pattern_len] - prefix_hash[i] + kMod) % kMod;
+		if(cur_hash == (pattern_hash * p_pow_i) % kMod) {
 			return true;
 		}
-		pPowI = (pPowI * p) % m;
+		p_pow_i = (p_pow_i * kPrime) % kMod;
 	}
 
 	return false;
@@ -42,7 +42,7 @@ int main() {
 	string text = "abaacdef";
 	string pattern = "aac";
 
-	cout << rabinCarp(text, pattern);
+	cout << RabinCarp(text, pattern);
 
 	return 0;
 }
