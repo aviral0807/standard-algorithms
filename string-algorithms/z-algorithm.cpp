@@ -7,17 +7,17 @@ vector<int> ComputeZArray(string &str) {
 
 	vector<int> z(str_len, 0);
 
-	int l=0, r=0;
+	int l = 0, r = 0;
 
-	for(int i=1; i<str_len; i++) {
+	for(int i = 1; i < str_len; i++) {
 		if(i <= r) {
-			z[i] = min(z[i-l], r-i+1);
+			z[i] = min(z[i-l], r - i + 1);
 		}
-		while(i+z[i]<str_len and str[i+z[i]] == str[z[i]]) {
+		while(i + z[i] < str_len and str[i + z[i]] == str[z[i]]) {
 			z[i]++;
 		}
-		if(i+z[i]-1 > r) {
-			r = i+z[i]-1;
+		if(i + z[i] - 1 > r) {
+			r = i + z[i] - 1;
 			l = i;
 		}
 	}
