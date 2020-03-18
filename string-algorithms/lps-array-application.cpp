@@ -38,19 +38,12 @@ bool KnuthMorrisPratt(string &text, string &pattern) {
 	int j = 0;
 
 	for(int i = 0; i < text_len; i++) {	
-		while(true) {
-			if(pattern[j] == text[i]) {
-				j++;
-				break;
-			}
-			else if(j != 0) {
-				j = lps_pattern[j-1];
-			}
-			else {
-				break;
-			}
+		while(j>0 and pattern[j] != text[i]) {
+			j = lps_pattern[j-1];
 		}
-
+		if(pattern[j] == text[i]) {
+			j++;
+		}
 		if(j == pattern_len) {
 			return true;
 		}
@@ -74,7 +67,7 @@ vector<int> ComputePrefixFrequency(string &str) {
 		}
 	}
 
-	// Count for prefix itself
+	// Count for prefix itself.
 	for(int i=0; i<str_len; i++) {
 		prefix_count[i]++;
 	}
