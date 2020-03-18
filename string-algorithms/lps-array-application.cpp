@@ -11,19 +11,10 @@ vector<int> ComputeLPS(string &str) {
 
 	for(int i = 1; i < str_len; i++) {
 		int j = lps[i-1];
-		while(true) {
-			if(str[j] == str[i]) {
-				lps[i] = j + 1;
-				break;
-			}
-			else if(j != 0) {
-				j = lps[j-1];
-			}
-			else {
-				lps[i] = 0;
-				break;
-			}
+		while(j > 0 and str[j] != str[i]) {
+			j = lps[j-1];
 		}
+		lps[i] = j + (str[j] == str[i]);
 	}
 
 	return lps;
