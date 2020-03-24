@@ -25,6 +25,20 @@ vector<int> ComputeZArray(string &str) {
 	return z;
 }
 
+
+bool PatternSearch(string &text, string &pattern) {
+	string s = pattern + text;
+	vector<int> z = ComputeZArray(s);
+
+	for(auto i: z) {
+		if(i >= pattern.size()) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int main() {
 	string text = "aabbaabcaabbaacda";
 
@@ -32,4 +46,8 @@ int main() {
 	for(auto i: ComputeZArray(text)) {
 		cout << i << " ";
 	}
+
+	string pattern = "aabc";
+
+	cout << "\nPattern Search - " << PatternSearch(text, pattern);
 }
