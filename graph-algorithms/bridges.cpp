@@ -4,32 +4,27 @@ using namespace std;
 
 const int N = 100005;
 
-int timer = 0, vis_time[N], low[N], a_point[N];
+int timer = 0, vis_time[N], low[N];
+vector<pair<int, int>> bridges;
 vector<int> adj[N];
 
 void dfs(int node, int par = -1) {
 	vis_time[node] = low[node] = ++timer;
 
-	int cnt = 0;
 	for(auto child: adj[node]) {
 		if(child != par) {
 			if(!vis_time[child]) {
 				dfs(child, node);
 				low[node] = min(low[child], low[node]);
 
-				if(par != -1 and low[child] >= vis_time[node]) {
-					a_point[node] = 1;
+				if(low[child] > vis_time[node]) {
+					bridges.push_back({node, child});
 				}
-				++cnt;
 			}
 			else {
 				low[node] = min(low[node], vis_time[child]);
 			}
 		}
-	}
-
-	if(par == -1 and cnt > 1) {
-		a_point[node] = 1;
 	}
 }
 
@@ -50,12 +45,11 @@ int main() {
 		}
 	}
 
-	cout << "Articulation Points - ";
-	for(int i = 1; i <= n; i++) {
-		if(a_point[i]) {
-			cout << i << " ";
-		}
+	cout << "Bridges - " << endl;
+	for(auto ed: bridges) {
+		cout << ed.first << " - " << ed.second << endl;
 	}
+	
 
 	return 0;
 }
